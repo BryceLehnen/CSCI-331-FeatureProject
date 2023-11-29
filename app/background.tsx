@@ -18,9 +18,18 @@ export default function background({state}) {
     let [backgroundImage, setBackgroundImage] = useState(backgroundStates[8])
     let [time, setTime] = useState(1)
     let [lastTime, setLastTime] = useState(0)
+    let [lat, setLat] = useState(0)
+    let [lon, setLon] = useState(0)
+    // astronomical_begin, nautical_begin, civil_begin, sunrise, solar_noon, sunset, civil_end, nautical_end, astronomical_end
+    let [sunriseSunsetTimes, setSunriseSunsetTimes] = useState([])
     
+    const delay = ms => new Promise(
+        resolve => setTimeout(resolve, ms)
+    )
+
     useEffect(() => {
-        
+        getSunsetSunrise()
+
         // Timer for updating background
         const interval = setInterval(() => {
             update()
@@ -28,6 +37,29 @@ export default function background({state}) {
 
         return () => clearInterval(interval)
     }, [])
+
+    // Caches the data from sunrise-sunset api
+    function getSunsetSunrise() {
+        // Grabbing lat and long data from browser
+        navigator.geolocation.getCurrentPosition((position) => {
+            
+            setLat(position.coords.latitude)
+            lat = position.coords.latitude
+            setLon(position.coords.longitude)
+            lon = position.coords.longitude
+        })
+        console.log("lat ", lat, " lon ", lon)
+
+        // Using location data to fetch data from api
+        fetch(`https://api.sunrise-sunset.org/json?lat=${lat}&lng=${lon}&date=today&formatted=0`)
+            .then(res=>res.json())
+            .then(data=> {
+                //setSunriseSunsetTimes(data)
+                sunriseSunsetTimes = data
+                console.log(data)
+            })
+        console.log(sunriseSunsetTimes)
+    }
 
     // Updates the current time
     // Time is a 4 digit int; so 10:37am => 1037 and 3:52pm => 1552
