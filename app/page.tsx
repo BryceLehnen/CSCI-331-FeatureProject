@@ -1,11 +1,13 @@
 "use client"
 import {useState, useEffect} from "react"
+import Background from "./background"
+import settings from "./settings"
 
 export default function Page() {
 
     return (
     <div>
-        <h1>Hello world</h1>
+        <Background state={0} />
     </div>
     )
 }
