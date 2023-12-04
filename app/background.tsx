@@ -31,7 +31,6 @@ export default function background({state}) {
 
     useEffect(() => {
         getSunsetSunrise()
-        //setTimes()
 
         // Timer for updating background
         const interval = setInterval(() => {
@@ -72,9 +71,8 @@ export default function background({state}) {
             nautical_end: data.results.nautical_twilight_end,
             astronomical_end: data.results.astronomical_twilight_end}
 
-            //setSunriseSunsetTimes(newTimes)
+            // Sets object data to sunriseSunsetTimes
             sunriseSunsetTimes = newTimes
-            //console.log("RAW ", data)
             console.log(sunriseSunsetTimes)
 
             // Call setTimes now that we have the json data
@@ -90,8 +88,6 @@ export default function background({state}) {
         const now = new Date()
         let offset = now.getTimezoneOffset()
         const os = (offset / 60)
-        //const os = 0      // Used for testing. Change offset to 'appear' in different timezones
-        //console.log("OFF ", os)
 
         // Times in chronological order
         backgroundTimes[0] = 0                                                          // night
@@ -129,22 +125,27 @@ export default function background({state}) {
     function changeTime() {
         let rawTime = new Date()
         let curTime = (rawTime.getHours() * 100) + rawTime.getMinutes()
-        //setTime(curTime)
         time = curTime
         console.log("Current time: ", time)
     }
 
     // Checks time and changes image accordingly
     function update() {
-        //console.log(sunriseSunsetTimes['astronomical_begin'])
-        //console.log("lat ", lat, " lon ", lon)
-        console.log(backgroundTimes)
         changeTime()
         if (lastTime != time) {
             //setLastTime(time)
             lastTime = time
             console.log("CHECKING")
             if (time >= backgroundTimes[0] && time < backgroundTimes[1]) change(0)
+            else if (time >= backgroundTimes[1] && time < backgroundTimes[2]) change(7)
+            else if (time >= backgroundTimes[2] && time < backgroundTimes[3]) change(1)
+            else if (time >= backgroundTimes[3] && time < backgroundTimes[4]) change(2)
+            else if (time >= backgroundTimes[4] && time < backgroundTimes[5]) change(3)
+            else if (time >= backgroundTimes[5] && time < backgroundTimes[6]) change(4)
+            else if (time >= backgroundTimes[6] && time < backgroundTimes[7]) change(5)
+            else if (time >= backgroundTimes[7] && time < backgroundTimes[8]) change(6)
+            else if (time >= backgroundTimes[8] && time < backgroundTimes[9]) change(7)
+            else if (time >= backgroundTimes[9]) change(0)
         }
     }
 
@@ -152,7 +153,7 @@ export default function background({state}) {
     function change(index) {
         // Checks if background should be changed
         if (index != lastState) {
-            setLastState(index)
+            lastState = index
         }
         else {
             return
@@ -161,7 +162,6 @@ export default function background({state}) {
         // TODO Add transition if time allows
 
         // Changes the url in backgroundImage using the index provided
-        console.log("CHANGING BACKGROUND ", lastState)
         setBackgroundImage(backgroundStates[index])
     }
 
