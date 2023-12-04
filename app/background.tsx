@@ -18,6 +18,7 @@ export default function background({state}) {
     let [backgroundImage, setBackgroundImage] = useState(backgroundStates[8])
     let [time, setTime] = useState(1)
     let [lastTime, setLastTime] = useState(0)
+    let [lastState, setLastState] = useState(8)
     let [lat, setLat] = useState(0)
     let [lon, setLon] = useState(0)
     // astronomical_begin, nautical_begin, civil_begin, sunrise, solar_noon, sunset, civil_end, nautical_end, astronomical_end
@@ -29,6 +30,7 @@ export default function background({state}) {
 
     useEffect(() => {
         getSunsetSunrise()
+        setTimes()
 
         // Timer for updating background
         const interval = setInterval(() => {
@@ -61,6 +63,13 @@ export default function background({state}) {
         console.log(sunriseSunsetTimes)
     }
 
+    // Takes the UTC times given from sunrise-sunset API and converts it to your local time by checking current time and getting
+    // the offset from it and UTC
+    // Once converted, it sets the times for when the backgrounds should change and stores this info in sunriseSunsetTimes[]
+    function setTimes() {
+
+    }
+
     // Updates the current time
     // Time is a 4 digit int; so 10:37am => 1037 and 3:52pm => 1552
     function changeTime() {
@@ -77,8 +86,26 @@ export default function background({state}) {
         if (lastTime != time) {
             //setLastTime(time)
             lastTime = time
-            // bunch of if statements
+            console.log("CHECKING")
+            if (time >= sunriseSunsetTimes[0] && time < sunriseSunsetTimes[1]) change(0)
         }
+    }
+
+    // Change background image according to the index provided
+    function change(index) {
+        // Checks if background should be changed
+        if (index != lastState) {
+            setLastState(index)
+        }
+        else {
+            return
+        }
+
+        // TODO Add transition if time allows
+
+        // Changes the url in backgroundImage using the index provided
+        console.log("CHANGING BACKGROUND ", lastState)
+        setBackgroundImage(backgroundStates[index])
     }
 
     return (
