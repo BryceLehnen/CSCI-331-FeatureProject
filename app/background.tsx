@@ -166,6 +166,11 @@ export default function background({state}) {
         let curTime = (rawTime.getHours() * 100) + rawTime.getMinutes()
         time = curTime
         console.log("Current time: ", time)
+
+        // For testing purposes
+        // time = time + 5
+        // if (time > 2400) time = 0
+        // console.log("Current time: ", time)
     }
 
     // Checks time and changes image accordingly
@@ -174,7 +179,7 @@ export default function background({state}) {
         if (lastTime != time) {
             //setLastTime(time)
             lastTime = time
-            console.log("CHECKING")
+            //console.log("CHECKING")
             if (time >= backgroundTimes[0] && time < backgroundTimes[1]) change(0)
             else if (time >= backgroundTimes[1] && time < backgroundTimes[2]) change(7)
             else if (time >= backgroundTimes[2] && time < backgroundTimes[3]) change(1)
