@@ -22,7 +22,8 @@ export default function background({state}) {
     let [lat, setLat] = useState(0)
     let [lon, setLon] = useState(0)
     // astronomical_begin, nautical_begin, civil_begin, sunrise, solar_noon, sunset, civil_end, nautical_end, astronomical_end
-    let [sunriseSunsetTimes, setSunriseSunsetTimes] = useState([])
+    let [sunriseSunsetTimes, setSunriseSunsetTimes] = useState({})
+    let [backgroundTimes, setBackgroundTimes] = useState([])
     
     const delay = ms => new Promise(
         resolve => setTimeout(resolve, ms)
@@ -30,7 +31,7 @@ export default function background({state}) {
 
     useEffect(() => {
         getSunsetSunrise()
-        setTimes()
+        //setTimes()
 
         // Timer for updating background
         const interval = setInterval(() => {
@@ -41,7 +42,7 @@ export default function background({state}) {
     }, [])
 
     // Caches the data from sunrise-sunset api
-    function getSunsetSunrise() {
+    async function getSunsetSunrise() {
         // Grabbing lat and long data from browser
         navigator.geolocation.getCurrentPosition((position) => {
             
@@ -50,24 +51,77 @@ export default function background({state}) {
             setLon(position.coords.longitude)
             lon = position.coords.longitude
         })
+        await delay(200)    // Small delay to get lat and lon BEFORE fetching json data
         console.log("lat ", lat, " lon ", lon)
 
         // Using location data to fetch data from api
-        fetch(`https://api.sunrise-sunset.org/json?lat=${lat}&lng=${lon}&date=today&formatted=0`)
-            .then(res=>res.json())
-            .then(data=> {
-                //setSunriseSunsetTimes(data)
-                sunriseSunsetTimes = data
-                console.log(data)
-            })
-        console.log(sunriseSunsetTimes)
+        const res = await fetch(`https://api.sunrise-sunset.org/json?lat=${lat}&lng=${lon}&date=today&formatted=0`)
+        if (!res.ok) {
+            throw new Error('Failed to fetch data')
+        }
+        else {
+            const data = await res.json()
+            const newTimes = 
+            {astronomical_begin: data.results.astronomical_twilight_begin,
+            nautical_begin: data.results.nautical_twilight_begin,
+            civil_begin: data.results.civil_twilight_begin,
+            sunrise: data.results.sunrise,
+            solar_noon: data.results.solar_noon,
+            sunset: data.results.sunset,
+            civil_end: data.results.civil_twilight_end,
+            nautical_end: data.results.nautical_twilight_end,
+            astronomical_end: data.results.astronomical_twilight_end}
+
+            //setSunriseSunsetTimes(newTimes)
+            sunriseSunsetTimes = newTimes
+            //console.log("RAW ", data)
+            console.log(sunriseSunsetTimes)
+
+            // Call setTimes now that we have the json data
+            setTimes()
+        }
     }
 
     // Takes the UTC times given from sunrise-sunset API and converts it to your local time by checking current time and getting
     // the offset from it and UTC
-    // Once converted, it sets the times for when the backgrounds should change and stores this info in sunriseSunsetTimes[]
-    function setTimes() {
+    // Once converted, it sets the times for when the backgrounds should change and stores this info in backgroundTimes[]
+    async function setTimes() {
+        // Creating the offset and converting it to hours
+        const now = new Date()
+        let offset = now.getTimezoneOffset()
+        const os = (offset / 60)
+        //const os = 0      // Used for testing. Change offset to 'appear' in different timezones
+        //console.log("OFF ", os)
 
+        // Times in chronological order
+        backgroundTimes[0] = 0                                                          // night
+        backgroundTimes[1] = utcToLocal(sunriseSunsetTimes['astronomical_begin'], os)   // dusk
+        backgroundTimes[2] = utcToLocal(sunriseSunsetTimes['nautical_begin'], os)       // dawn
+        backgroundTimes[3] = utcToLocal(sunriseSunsetTimes['civil_begin'], os)          // sunrise
+        backgroundTimes[4] = utcToLocal(sunriseSunsetTimes['sunrise'], os) + 100        // early_morning
+        backgroundTimes[5] = utcToLocal(sunriseSunsetTimes['solar_noon'], os)           // day
+        backgroundTimes[6] = utcToLocal(sunriseSunsetTimes['sunset'], os) - 100         // golden_hour
+        backgroundTimes[7] = utcToLocal(sunriseSunsetTimes['sunset'], os)               // sunset
+        backgroundTimes[8] = utcToLocal(sunriseSunsetTimes['nautical_end'], os)         // dusk
+        backgroundTimes[9] = utcToLocal(sunriseSunsetTimes['astronomical_end'], os)     // night
+    }
+
+    // Helper function for setTimes()
+    // Returns the time as a 4 digit int when givin a UTC time from sunriseSunsetTimes
+    function utcToLocal(stringTime, os) {
+        let intTime = parseInt(stringTime.substring(11, 13))
+        let sethour = 0
+        let setmin = 0
+        let diff = 0
+        if (intTime >= os) {
+            sethour = (intTime - os) * 100
+        }
+        else {
+            diff = os - intTime
+            sethour = (24 - diff) * 100
+        }
+        setmin = parseInt(stringTime.substring(14, 16))
+        return sethour + setmin
     }
 
     // Updates the current time
@@ -82,12 +136,15 @@ export default function background({state}) {
 
     // Checks time and changes image accordingly
     function update() {
+        //console.log(sunriseSunsetTimes['astronomical_begin'])
+        //console.log("lat ", lat, " lon ", lon)
+        console.log(backgroundTimes)
         changeTime()
         if (lastTime != time) {
             //setLastTime(time)
             lastTime = time
             console.log("CHECKING")
-            if (time >= sunriseSunsetTimes[0] && time < sunriseSunsetTimes[1]) change(0)
+            if (time >= backgroundTimes[0] && time < backgroundTimes[1]) change(0)
         }
     }
 
