@@ -167,7 +167,9 @@ export default function background({state}) {
 
     return (
         <div>
-            <img src={backgroundImage} alt="Background image" />
+            <img id="background" src={backgroundImage} alt="Background image" />
+            <img id="sunrise" src="https://i.imgur.com/qUibc2y.png" alt="sunrise icon" />
+            <img id="sunset" src="https://i.imgur.com/zKXL1r5.png" alt="sunset icon" />
         </div>
     )
 }
