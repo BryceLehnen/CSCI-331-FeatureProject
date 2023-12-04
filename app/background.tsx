@@ -24,6 +24,9 @@ export default function background({state}) {
     // astronomical_begin, nautical_begin, civil_begin, sunrise, solar_noon, sunset, civil_end, nautical_end, astronomical_end
     let [sunriseSunsetTimes, setSunriseSunsetTimes] = useState({})
     let [backgroundTimes, setBackgroundTimes] = useState([])
+    // Times used for icons
+    let [sunrise, setSunrise] = useState("00:00 AM")
+    let [sunset, setSunset] = useState("00:00 AM")
     
     const delay = ms => new Promise(
         resolve => setTimeout(resolve, ms)
@@ -50,7 +53,7 @@ export default function background({state}) {
             setLon(position.coords.longitude)
             lon = position.coords.longitude
         })
-        await delay(200)    // Small delay to get lat and lon BEFORE fetching json data
+        await delay(500)    // Small delay to get lat and lon BEFORE fetching json data
         console.log("lat ", lat, " lon ", lon)
 
         // Using location data to fetch data from api
@@ -100,9 +103,15 @@ export default function background({state}) {
         backgroundTimes[7] = utcToLocal(sunriseSunsetTimes['sunset'], os)               // sunset
         backgroundTimes[8] = utcToLocal(sunriseSunsetTimes['nautical_end'], os)         // dusk
         backgroundTimes[9] = utcToLocal(sunriseSunsetTimes['astronomical_end'], os)     // night
+
+        // Sets the times for sunrise sunset icons
+        //sunrise = iconTime(sunriseSunsetTimes['sunrise'], os)
+        setSunrise(iconTime(sunriseSunsetTimes['sunrise'], os))
+        //sunset = iconTime(sunriseSunsetTimes['sunset'], os)
+        setSunset(iconTime(sunriseSunsetTimes['sunset'], os))
     }
 
-    // Helper function for setTimes()
+    // Helper functions for setTimes()
     // Returns the time as a 4 digit int when givin a UTC time from sunriseSunsetTimes
     function utcToLocal(stringTime, os) {
         let intTime = parseInt(stringTime.substring(11, 13))
@@ -118,6 +127,36 @@ export default function background({state}) {
         }
         setmin = parseInt(stringTime.substring(14, 16))
         return sethour + setmin
+    }
+
+    // Returns the time as a string, in 12hr time from UTC 24hr
+    function iconTime(stringTime, os) {
+        let intTime = parseInt(stringTime.substring(11, 13))
+        let setmin = stringTime.substring(14, 16)
+        let sethour = 0
+        let diff = 0
+        let meridian = "AM"
+        if (intTime >= os) {
+            sethour = (intTime - os)
+        }
+        else {
+            diff = os - intTime
+            sethour = (24 - diff)
+        }
+
+        // Convert to 12hr time and set meridian
+        if (sethour < 12) {
+            meridian = "AM"
+        }
+        else {
+            sethour = sethour - 12
+            meridian = "PM"
+        }
+
+        // Convert to string and concat the final time
+        sethour.toString()
+        let finaltime = sethour + ":" + setmin + " " + meridian
+        return finaltime
     }
 
     // Updates the current time
@@ -168,8 +207,10 @@ export default function background({state}) {
     return (
         <div>
             <img id="background" src={backgroundImage} alt="Background image" />
-            <img id="sunrise" src="https://i.imgur.com/qUibc2y.png" alt="sunrise icon" />
-            <img id="sunset" src="https://i.imgur.com/zKXL1r5.png" alt="sunset icon" />
+            <img id="sunriseimg" src="https://i.imgur.com/qUibc2y.png" alt="sunrise icon" />
+            <img id="sunsetimg" src="https://i.imgur.com/zKXL1r5.png" alt="sunset icon" />
+            <p id="sunrise">{sunrise}</p>
+            <p id="sunset">{sunset}</p>
         </div>
     )
 }

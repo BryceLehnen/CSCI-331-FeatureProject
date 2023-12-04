@@ -8,18 +8,36 @@
     object-fit: cover;
 }
 
-#sunrise {
-    width: 2.5em;
+#sunriseimg {
+    width: 2em;
     height: auto;
     position: fixed;
-    top: 1%;
-    left: 91%;
+    top: .5em;
+    right: 6.25em;
+}
+
+#sunsetimg {
+    width: 2em;
+    height: auto;
+    position: fixed;
+    top: 2.5em;
+    right: 6.25em;
+}
+
+#sunrise {
+    color: #ffffff;
+    font-size: 1.25em;
+    font-family: Helvetica, Arial, sans-serif;
+    position: fixed;
+    top: -.5em;
+    right: .5em;
 }
 
 #sunset {
-    width: 2.5em;
-    height: auto;
+    color: #ffffff;
+    font-size: 1.25em;
+    font-family: Helvetica, Arial, sans-serif;
     position: fixed;
-    top: 5%;
-    left: 91%;
+    top: 1em;
+    right: .5em;
 }
