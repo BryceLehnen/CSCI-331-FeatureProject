@@ -17,6 +17,8 @@ Website Link (John): http://csci331.cs.montana.edu:3016/
 
 Github Link: https://github.com/BryceLehnen/CSCI-331-FeatureProject
 
+Presentation Slides: https://docs.google.com/presentation/d/1aUx-fVKsG0t038tvdlCKhUFwfvrWcox-xtGAKEpnYG8/edit?usp=sharing
+
 ---
 ## Goal of the Project
 
