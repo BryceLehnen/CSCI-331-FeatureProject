@@ -210,6 +210,7 @@ export default function background({state}) {
         setFutureBackground(backgroundStates[index])
         await transition()
         setBackgroundImage(backgroundStates[index])
+        setOpacityToggle(1)
     }
 
     // Slowly decreases the opacity of the current background to reveal the next background

@@ -11,7 +11,9 @@ Description: Using NextJS, we created a website that it meant to be used as the 
 ---
 ## Links
 
-Website Link: http://csci331.cs.montana.edu:5031/
+Website Link (Bryce): http://csci331.cs.montana.edu:5031/
+
+Website Link (John): http://csci331.cs.montana.edu:/
 
 Github Link: https://github.com/BryceLehnen/CSCI-331-FeatureProject
 
@@ -29,12 +31,16 @@ The only API used was sunrise-sunset API. It allowed us to use the users geoloca
 
 Working with time or dates in the normal sense would have made this project much more complicated. Time is not base 10, but we wanted it to be a simple integer, so that it would be easier to compare to other converted times. The basic idea is that we convert 24hr time to a four digit integer. The first 2 digits contain the hour and the last 2 contain the min, so 4:37pm would be 1637 as an int. This was simple enough, and with it we could convert the time from sunrise-sunset API and the current time from the users clock. Comparing these integers was easy as we could simply check to see if one was greater or less than the other as an integer like 1261 would not be possible.
 
+The background transition is slightly unorthadox, but it does work in the end. Essentially, there are 2 backgrounds with the future background directly behind the current one. When the backgrounds need to be changed, the future background is changed appropriately to the next image. After this, the current background slowly lowers its opacity from 1 to 0, thus making it completely transparent leaving only the future image visible. Then the current image is reset to the next image and its opacity turned back to 1.
+
 ---
 ## Individual Member Notes
 
 ### Bryce Lehnen
 
 I mostly worked on the background and with sunrise-sunset API. The API is pretty straightforward to use, but React did not enjoy working with it. I had a lot of issues with timing since it was crucial that certain parts of the code ran before others. However, React wanted to reload the page at the start, and run the code out of order. Mostly when using console.log() with variable values it would print out what the value was before it was changed. This naturally made debugging a nightmare, but eventually I was able to get a delay function working that would wait a certain amount of milliseconds along with getting parts of the program to wait for the json data from sunrise-sunset API.
+
+All in all, I would prefer not use React as it gives me headaches.
 
 ### John Hartman
 
