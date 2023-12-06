@@ -1,5 +1,4 @@
 import {useState, useEffect} from "react"
-import Image from 'next/image'
 import './background.css'
 
 export default function background({state}) {
@@ -17,7 +16,6 @@ export default function background({state}) {
     ]
     let [backgroundImage, setBackgroundImage] = useState(backgroundStates[8])
     let [futureBackground, setFutureBackground] = useState(backgroundStates[8])
-    //const opacityToggle = {opacity: 1}
     let [opacityToggle, setOpacityToggle] = useState(1)
     let [time, setTime] = useState(1)
     let [lastTime, setLastTime] = useState(0)
@@ -36,6 +34,7 @@ export default function background({state}) {
     )
 
     useEffect(() => {
+        // Fetches and sets times for backgrounds
         getSunsetSunrise()
 
         // Timer for updating background
@@ -56,7 +55,7 @@ export default function background({state}) {
             setLon(position.coords.longitude)
             lon = position.coords.longitude
         })
-        await delay(500)    // Small delay to get lat and lon BEFORE fetching json data
+        await delay(1000)    // Small delay to get lat and lon BEFORE fetching json data
         console.log("lat ", lat, " lon ", lon)
 
         // Using location data to fetch data from api
