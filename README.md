@@ -38,7 +38,7 @@ I mostly worked on the background and with sunrise-sunset API. The API is pretty
 
 ### John Hartman
 
-
+I worked on the settings functionality, enabling users to manage their preferred websites through checkboxes within the Settings component. Additionally, I developed the shortcut feature, displaying selected websites as links within the shortcuts container on the main page. These clickable shortcuts redirect users to their chosen websites, enhancing navigation efficiency. Future implementation will include representing each website by an image, offering a visually intuitive selection process, and a method for persistance of shorcut selections.
 
 ---
 ## Conclusion
