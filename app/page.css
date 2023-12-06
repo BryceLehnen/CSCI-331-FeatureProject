@@ -1,0 +1,30 @@
+/* page.css */
+
+.shortcuts-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end; /* Align items to the bottom */
+  border: 2px solid black;
+  border-radius: 10px;
+  padding: 20px; /* Adjust padding as needed */
+  margin-top: 500px;
+  margin-bottom: 50px; /* Adjust margin to position it in the lower third */
+  height: 10px; /* Set a height to contain the content and position at the bottom */
+  position: absolute;
+  bottom: 20px; /* Adjust bottom position as needed */
+  left: 50%; /* Adjust left position as needed */
+  transform: translateX(-50%); /* Center horizontally */
+  z-index: 10;
+}
+.shortcuts-container a{
+  display: block;
+  margin: 10px;
+}
+.settings-icon-container {
+  /* Styles for the settings icon container */
+  /* ... */
+  position: absolute;
+  top: 20px; /* Adjust top position as needed */
+  left: 20px; /* Adjust left position as needed */
+  z-index: 10; /* Ensure the settings icon is above the background */
+}
