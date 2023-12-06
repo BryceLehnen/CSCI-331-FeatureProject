@@ -55,7 +55,7 @@ export default function background({state}) {
             setLon(position.coords.longitude)
             lon = position.coords.longitude
         })
-        await delay(10000)    // Small delay to get lat and lon BEFORE fetching json data
+        await delay(500)    // Small delay to get lat and lon BEFORE fetching json data
         console.log("lat ", lat, " lon ", lon)
 
         // Using location data to fetch data from api
