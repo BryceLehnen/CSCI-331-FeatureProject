@@ -16,6 +16,9 @@ export default function background({state}) {
         "https://i.imgur.com/KGoIKwH.jpg",  // placeholder
     ]
     let [backgroundImage, setBackgroundImage] = useState(backgroundStates[8])
+    let [futureBackground, setFutureBackground] = useState(backgroundStates[8])
+    //const opacityToggle = {opacity: 1}
+    let [opacityToggle, setOpacityToggle] = useState(1)
     let [time, setTime] = useState(1)
     let [lastTime, setLastTime] = useState(0)
     let [lastState, setLastState] = useState(8)
@@ -194,7 +197,8 @@ export default function background({state}) {
     }
 
     // Change background image according to the index provided
-    function change(index) {
+    async function change(index) {
+        let previousIndex = lastState
         // Checks if background should be changed
         if (index != lastState) {
             lastState = index
@@ -203,15 +207,34 @@ export default function background({state}) {
             return
         }
 
-        // TODO Add transition if time allows
-
-        // Changes the url in backgroundImage using the index provided
+        // Sets future to the next background, but user doesn't see as it is behind the other background image
+        setFutureBackground(backgroundStates[index])
+        await transition()
         setBackgroundImage(backgroundStates[index])
+    }
+
+    // Slowly decreases the opacity of the current background to reveal the next background
+    function transition() {
+        return new Promise(function (resolve, reject) {
+            var del = 0.01
+            var op = 1
+            var id = setInterval(changeOpacity, 20)
+            
+            function changeOpacity() {
+                op = op - del
+                setOpacityToggle(op)
+                if (op <= 0) {
+                    clearInterval(id)
+                    resolve
+                }
+            }
+        })
     }
 
     return (
         <div>
-            <img id="background" src={backgroundImage} alt="Background image" />
+            <img id="futureBackground" src={futureBackground} alt="Future background image" />
+            <img id="background" src={backgroundImage} alt="Background image" style={{opacity: opacityToggle.toString()}} />
             <img id="sunriseimg" src="https://i.imgur.com/qUibc2y.png" alt="sunrise icon" />
             <img id="sunsetimg" src="https://i.imgur.com/zKXL1r5.png" alt="sunset icon" />
             <p id="sunrise">{sunrise}</p>
