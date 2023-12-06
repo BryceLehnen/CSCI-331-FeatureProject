@@ -13,7 +13,7 @@ Description: Using NextJS, we created a website that it meant to be used as the 
 
 Website Link (Bryce): http://csci331.cs.montana.edu:5031/
 
-Website Link (John): http://csci331.cs.montana.edu:/
+Website Link (John): http://csci331.cs.montana.edu:5016/
 
 Github Link: https://github.com/BryceLehnen/CSCI-331-FeatureProject
 
@@ -25,7 +25,7 @@ There has been a clear lack of expression when it comes to browser homepages. Ch
 ---
 ## Technical Summary
 
-NextJs was the framework used for this project. It allowed to create components for the links that made coding the project much easier.
+NextJs was the framework used for this project. It allowed to create components for the links that made coding the project much easier. The settings menu that controls the which links are displayed was accomplished using components. In javascript, there would have needed to be a lot of copying and pasting to properly implement this feature, but with NextJs, we were able to do it quite easily.
 
 The only API used was sunrise-sunset API. It allowed us to use the users geolocation to send a fetch request for various timestamps. These timestamps told us when sunrise, solar noon, and sunset were. Along with those basic times were the three stages twighlight both before sunrise and after sunset. These times determined when the background would change to the cooresponding image that would idealy match what it looked like outside the users window on a clear day.
 
@@ -49,9 +49,15 @@ I worked on the settings functionality, enabling users to manage their preferred
 ---
 ## Conclusion
 
-
+Overall, NextJs made parts of the project easier and other parts far more difficult than they needed to be. We could have something work in another project, then apply the exact same code to almost the same scenario and have it not work. Getting started with NextJs is a pain, but once the ball is rolling, it isn't the worst thing we've used. We definitely got a lot more experience with NextJs and React which will hopefully prove useful later on, but the experience was still well worth it. We would have liked to make the links completely user customizable, but it was out of the scope of this project. The only problem it currently has is due to the school server. Since the server uses http instead of https, the site cannot grab geolocation data which is used for controlling the background, so the server site will always place the user at Lat: 0 and Long: 0.
 
 ---
 ## References
 
+### Coding:
 
+https://nextjs.org/
+
+### Images:
+
+https://dakadibuja.artstation.com/projects/1VBvq
