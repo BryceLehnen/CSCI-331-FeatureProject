@@ -4,7 +4,7 @@
   justify-content: flex-end;
   border: 2px solid black;
   border-radius: 10px;
-  padding: 20px;
+  padding: 15px;
   margin-top: 500px;
   margin-bottom: 50px;
   height: 10px;
@@ -13,14 +13,32 @@
   left: 50%;
   transform: translateX(-50%); 
   z-index: 10;
+  background-color: #000000;
+  opacity: 85%;
 }
 .shortcuts-container a{
   display: block;
-  margin: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: -5px;
 }
 .settings-icon-container {
   position: absolute;
   top: 8px; 
   left: 8px; 
   z-index: 10; 
+}
+
+a:link, a:visited {
+  color: #ffffff;
+  text-decoration: none;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 1.25em;
+}
+
+a:hover, a:active {
+  color: #ffffff;
+  text-decoration: underline;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 1.25em;
 }

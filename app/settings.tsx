@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import settingsIcon from './images/settings.png';
+import './page.css'
 
 interface SettingsProps {
   updateShortcuts: (websites: Website[]) => void;
@@ -21,7 +22,7 @@ export default function Settings(props: SettingsProps) {
     { name: 'D2L', url: 'https://ecat.montana.edu/d2l/home', selected: true },
     { name: 'Facebook', url: 'https://www.facebook.com/', selected: false },
     { name: 'Netflix', url: 'https://www.netflix.com/', selected: false },
-    { name: 'Montana State', url: 'https://www.montana.edu/', selected: false },
+    { name: 'MontanaEDU', url: 'https://www.montana.edu/', selected: false },
     { name: 'MyInfo', url: 'https://prodmyinfo.montana.edu/pls/bzagent/twbkwbis.P_GenMenu?name=homepage', selected: false },
     { name: 'GitHub', url: 'https://github.com/', selected: false}
   ]);
