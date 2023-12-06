@@ -1,0 +1,26 @@
+.shortcuts-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end
+  border: 2px solid black;
+  border-radius: 10px;
+  padding: 20px;
+  margin-top: 500px;
+  margin-bottom: 50px;
+  height: 10px;
+  position: absolute;
+  bottom: 20px; 
+  left: 50%;
+  transform: translateX(-50%); 
+  z-index: 10;
+}
+.shortcuts-container a{
+  display: block;
+  margin: 10px;
+}
+.settings-icon-container {
+  position: absolute;
+  top: 20px; 
+  left: 20px; 
+  z-index: 10; 
+}
