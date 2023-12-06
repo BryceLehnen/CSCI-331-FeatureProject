@@ -16,11 +16,14 @@ interface Website {
 export default function Settings(props: SettingsProps) {
   const [isCollapsed, setIsCollapsed] = useState(true); // State to track whether the settings panel is collapsed
   const [websites, setWebsites] = useState<Website[]>([
-    { name: 'Youtube', url: 'https://youtube.com', selected: false },
+    { name: 'Youtube', url: 'https://youtube.com', selected: true },
     { name: 'Instagram', url: 'https://instagram.com', selected: false },
-    { name: 'D2L', url: 'https://ecat.montana.edu/d2l/home', selected: false },
+    { name: 'D2L', url: 'https://ecat.montana.edu/d2l/home', selected: true },
     { name: 'Facebook', url: 'https://www.facebook.com/', selected: false },
     { name: 'Netflix', url: 'https://www.netflix.com/', selected: false },
+    { name: 'Montana State', url: 'https://www.montana.edu/', selected: false },
+    { name: 'MyInfo', url: 'https://prodmyinfo.montana.edu/pls/bzagent/twbkwbis.P_GenMenu?name=homepage', selected: false },
+    { name: 'GitHub', url: 'https://github.com/', selected: false}
   ]);
 
   const toggleCollapse = () => {
@@ -37,7 +40,7 @@ export default function Settings(props: SettingsProps) {
   return (
     <div>
       <div onClick={toggleCollapse} className="settings-icon">
-        <Image src={settingsIcon.src} alt="Settings Icon" width={50} height={50} />
+        <Image src={settingsIcon.src} alt="Settings Icon" width={40} height={40} />
       </div>
 
       {/* Display websites and checkboxes only if the panel is not collapsed */}

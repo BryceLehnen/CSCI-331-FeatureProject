@@ -18,6 +18,17 @@ export default function Page() {
   const updateShortcuts = (websites: Website[]) => {
     setShortcutWebsites(websites.filter((website) => website.selected))
   };
+  const onOffToggle = {
+    display: 'flex',
+  }
+
+  // Hides shortcuts-container if its empty
+  if (shortcutWebsites.length == 0) {
+    onOffToggle.display = 'none'
+  }
+  else if (shortcutWebsites.length == 1) {
+    onOffToggle.display = 'flex'
+  }
 
   return (
     <div>
@@ -25,7 +36,7 @@ export default function Page() {
       <div className ="settings-icon-container">
       <Settings updateShortcuts={updateShortcuts} />
       </div>
-      <div className="shortcuts-container"> 
+      <div className="shortcuts-container" style={onOffToggle}> 
         {shortcutWebsites.map((website, index) => (
           <a key={index} href={website.url} target="_blank" rel="noopener noreferrer">
             {website.name}

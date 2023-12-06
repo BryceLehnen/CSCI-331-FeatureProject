@@ -1,7 +1,7 @@
 .shortcuts-container {
   display: flex;
   flex-direction: row;
-  justify-content: flex-end
+  justify-content: flex-end;
   border: 2px solid black;
   border-radius: 10px;
   padding: 20px;
@@ -20,7 +20,7 @@
 }
 .settings-icon-container {
   position: absolute;
-  top: 20px; 
-  left: 20px; 
+  top: 8px; 
+  left: 8px; 
   z-index: 10; 
 }
