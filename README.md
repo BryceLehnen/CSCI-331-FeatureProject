@@ -13,7 +13,7 @@ Description: Using NextJS, we created a website that it meant to be used as the 
 
 Website Link (Bryce): http://csci331.cs.montana.edu:5031/
 
-Website Link (John): http://csci331.cs.montana.edu:5016/
+Website Link (John): http://csci331.cs.montana.edu:3016/
 
 Github Link: https://github.com/BryceLehnen/CSCI-331-FeatureProject
 
